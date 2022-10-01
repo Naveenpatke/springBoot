@@ -183,4 +183,5 @@ We can use the @Autowired to mark a dependency which Spring is going to resolve 
 		6.4 @Configuration
 			Configuration classes can contain bean definition methods annotated with @Bean
 		6.5 Stereotype Annotations and AOP [ https://www.baeldung.com/spring-bean-annotations#annotations ]
-		
+
+Spring Bean Scopes [ https://www.baeldung.com/spring-bean-scopes ]
