@@ -1,7 +1,73 @@
 Annotation
-1. Spring Core Annotations [ https://www.baeldung.com/spring-core-annotations ]
-1.1. @Autowired [ https://www.baeldung.com/spring-autowire ]
-We can use the @Autowired to mark a dependency which Spring is going to resolve and inject. We can use this annotation with a constructor, setter, or field injection.
+
+Spring Application Context is the one which will maintain all the beans Spring boot run method return the application
+context back
+
+Steps bean creation takes place
+
+```
+	Searching directory [/in28Minutes/git/getting-started-in-5-steps/spring-in-5-steps/target/classes/com/in28minutes/spring/basics/springin5steps] for files matching pattern [/in28Minutes/git/getting-started-in-5-steps/spring-in-5-steps/target/classes/com/in28minutes/spring/basics/springin5steps/**/*.class]
+	Identified candidate component class: file [/in28Minutes/git/getting-started-in-5-steps/spring-in-5-steps/target/classes/com/in28minutes/spring/basics/springin5steps/BinarySearchImpl.class]
+	Identified candidate component class: file [/in28Minutes/git/getting-started-in-5-steps/spring-in-5-steps/target/classes/com/in28minutes/spring/basics/springin5steps/BubbleSortAlgorithm.class]
+	
+	Creating instance of bean 'binarySearchImpl'
+	Creating instance of bean 'bubbleSortAlgorithm'
+	Finished creating instance of bean 'bubbleSortAlgorithm'
+	
+	Constuctor - Autowiring by type from bean name 'binarySearchImpl' via constructor
+	to bean named 'bubbleSortAlgorithm'
+	Setter -  Autowiring by type from bean name 'binarySearchImpl' to bean named 'bubbleSortAlgorithm'
+	No Setter or Constructor - Autowiring by type from bean name 'binarySearchImpl' to bean named 'bubbleSortAlgorithm'
+	
+	
+	Finished creating instance of bean 'binarySearchImpl'
+```
+
+```
+	Autowiring can we dont in 3 ways
+	constructor injection
+	setter function
+	Autowiring a variable
+```
+
+```
+	To autowire a component class when multiple component class of same type is available 
+		we can do it by assigning a high priority class with @Primary annonation, and this class will be selected automatically
+		or Autowiring based on the component class name
+			Eg : @Autowired
+				SortAlgorithm bubbleSortAlgorithm
+		Use Qualifier annotation to autowire based on qualifier name	
+```
+
+### Bean Scope
+
+Default - singleton
+
+- singleton - One instance per Spring context
+  - @Scope("singleton")
+- prototype - New bean whenever requested
+  - @Scope("prototype")
+  - @Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE,
+    proxyMode = ScopedProxyMode.TARGET_CLASS)  
+    Whenever your trying to get a bean and it depenedency has a scope of prototype, to get different instance of the dependency we should use the proxy [ for more info refer step 15 in the in28minutes repo in JdbcConnection class] 
+- request - One bean per HTTP request
+- session - One bean per HTTP session
+
+### Lifecycle of Bean
+- @PostConstruct
+  - as soon as the bean is created and initialized with dependency this postConstruct annotated method will be called
+- @PreDestroy
+  - the method annotated with this annotation is called just before the bean is removed out of the context
+  - The PreDestroy annotation is used on methods as a callback notification to signal that the instance is in the process of being removed by the container. The method annotated with PreDestroy is typically used to release resources that it has been holding.
+
+### CDI [ Context & Dependency Injection]
+
+
+### 1. Spring Core Annotations [ https://www.baeldung.com/spring-core-annotations ]
+
+```
+		1.1. @Autowired [ https://www.baeldung.com/spring-autowire ]
+		We can use the @Autowired to mark a dependency which Spring is going to resolve and inject. We can use this annotation with a constructor, setter, or field injection.
 
 			@Autowired has a boolean argument called required with a default value of true. It tunes Spring's behavior when it doesn't find a suitable bean to wire. When true, an exception is thrown, otherwise, nothing is wired.
 
@@ -49,8 +115,9 @@ We can use the @Autowired to mark a dependency which Spring is going to resolve 
 			
 		1.10. @Profile
 			If we want Spring to use a @Component class or a @Bean method only when a specific profile is active, we can mark it with @Profile. We can configure the name of the profile with the value argument of the annotation:	
-			
-	2. Spring Web Annotations [ https://www.baeldung.com/spring-mvc-annotations ]
+
+```
+##2. Spring Web Annotations [ https://www.baeldung.com/spring-mvc-annotations ]
 		1. @ExceptionHandler
 			With this annotation, we can declare a custom error handler method. Spring calls this method when a request handler method throws any of the specified exceptions.
 
@@ -75,15 +142,20 @@ We can use the @Autowired to mark a dependency which Spring is going to resolve 
 				}
 		
 		3. @CrossOrigin
-	
-	3. Spring Boot Annotations [ https://www.baeldung.com/spring-boot-annotations ]
+```
+```
+###3. Spring Boot Annotations [ https://www.baeldung.com/spring-boot-annotations ]
+```
 		1.1  @SpringBootApplication
 			@SpringBootApplication encapsulates @Configuration, @EnableAutoConfiguration, and @ComponentScan annotations with their default attributes.
 			
 		1.2 @EnableAutoConfiguration
 			@EnableAutoConfiguration, as its name says, enables auto-configuration. It means that Spring Boot looks for auto-configuration beans on its classpath and automatically applies them.
-			
-	4. Spring Scheduling Annotations [ https://www.baeldung.com/spring-scheduling-annotations ] Eg : https://github.com/eugenp/tutorials/tree/master/spring-boot-modules/spring-boot-annotations
+```
+
+
+###4. Spring Scheduling Annotations [ https://www.baeldung.com/spring-scheduling-annotations ] Eg : https://github.com/eugenp/tutorials/tree/master/spring-boot-modules/spring-boot-annotations
+```
 			When single-threaded execution isn't enough, we can use annotations from the org.springframework.scheduling.annotation package.
 		1.1 @EnableAsync
 			With this annotation, we can enable asynchronous functionality in Spring.
@@ -151,7 +223,10 @@ We can use the @Autowired to mark a dependency which Spring is going to resolve 
 					threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
 					return threadPoolTaskScheduler;
 				}
-	5. Spring Data Annotations [ https://www.baeldung.com/spring-data-annotations ]
+```
+
+###5. Spring Data Annotations [ https://www.baeldung.com/spring-data-annotations ]
+```
 		5.1. @Transactional [ https://www.baeldung.com/transaction-configuration-with-jpa-and-spring ]
 			When we want to configure the transactional behavior of a method, we can do it with:
 
@@ -164,8 +239,10 @@ We can use the @Autowired to mark a dependency which Spring is going to resolve 
 			@Modifying
 			@Query("UPDATE Person p SET p.name = :name WHERE p.id = :id")
 			void changeName(@Param("id") long id, @Param("name") String name);
-	
-	6. Spring Bean Annotations [ https://www.baeldung.com/spring-bean-annotations ]
+```
+
+6. Spring Bean Annotations [ https://www.baeldung.com/spring-bean-annotations ]
+```
 		6.1 Component Scanning
 			Spring can automatically scan a package for beans if component scanning is enabled.
 
@@ -183,5 +260,6 @@ We can use the @Autowired to mark a dependency which Spring is going to resolve 
 		6.4 @Configuration
 			Configuration classes can contain bean definition methods annotated with @Bean
 		6.5 Stereotype Annotations and AOP [ https://www.baeldung.com/spring-bean-annotations#annotations ]
+```
 
-Spring Bean Scopes [ https://www.baeldung.com/spring-bean-scopes ]
+###Spring Bean Scopes [ https://www.baeldung.com/spring-bean-scopes ]
