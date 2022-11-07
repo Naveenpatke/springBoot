@@ -9,15 +9,15 @@
   - So inside this `authenticate` method, my `AuthenticationManager`, which is provider manager, is going to try all the authentication providers available inside the spring security framework [Eg : login by userCredentials or oAuth login or login viaFingerPrint] and it is going  to invoke the `authenticate` method in each of these providers by default.
   - So `DaoAuthenticationProvider` is the default authenticationProvider used by spring-security framework to perform the authentication
 
-![img.png](img.png)
-![img_1.png](img_1.png)
-![img_2.png](img_2.png)
-![img_3.png](img_3.png)
+![img.png](images/img.png)
+![img_1.png](images/img_1.png)
+![img_2.png](images/img_2.png)
+![img_3.png](images/img_3.png)
 
 ---
 ### Changing the default security configurations
 - So `WebSecurityConfigurerAdapter` is not recommended approach because before spring security 5.7 version, everyone used to use this class. Like whenever they implement this class inside their custom configurations, they can override the `configure` method, But please do not use this `WebSecurityConfigurerAdapter`.The reason is it is deprecated and the reason why it is deprecated is, If you see we have to extend this `WebSecurityConfigurerAdapter` class and override this `configurer` method, whereas with the other approach we have to create a being of type security filter chain. And since spring security team want everyone to move towards component style of defining or being style of defining the security requirements, they introduce this new style of configurations from the spring security 5.7 version. So that's why it is recommended to use the approach of defining a bean of type `SecurityFilterChain`
 - We can also override this behavior by creating our own security filter chain for the same.
-- ![img_4.png](img_4.png)
-- ![img_5.png](img_5.png)
+- ![img_4.png](images/img_4.png)
+- ![img_5.png](images/img_5.png)
 - 
