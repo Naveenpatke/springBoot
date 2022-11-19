@@ -1,25 +1,15 @@
 package com.learning.springBoot.config;
 
-import org.springframework.http.HttpMethod;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
 
-@EnableWebSecurity
-public class WebSecurityConfig
-        extends WebSecurityConfigurerAdapter {
+@Configuration
+public class WebSecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity http)
-            throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/employees", "/employees/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
+    @Bean
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        return http.authorizeRequests().anyRequest().authenticated().and().formLogin().and().httpBasic().and().build();
     }
-    // other necessary beans and definitions
 }
